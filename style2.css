@@ -1,0 +1,61 @@
+/*.twin-peaks {
+    font-family: Avant Garde, Avantgarde, Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: #644647;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 #47ff52, -1px -1px 0 #47ff52, 1px -1px 0 #47ff52, -1px 1px 0 #47ff52, 0px 1px 0 #47ff52, 1px 0px 0 #47ff52, 0px -1px 0 #47ff52, -1px 0px 0 #47ff52, 4px 2px 0 #333;
+}*/
+body {
+	/*background-image: url('twinpeaks.jpg');*/
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-color: white;
+}
+
+h1 {
+	text-align: center;
+}
+
+div {
+	display: inline-block;
+	width: 68%;
+	float: left;
+}
+
+.gridArea {
+	margin: auto;
+	display: block;
+}
+
+
+.button {
+	width: 15vw;
+	height: 15vw;
+	margin: 10px;
+	position: relative;
+	background-color: pink;
+
+}
+
+/*footer {
+	border-top: solid black 1px;
+	width: 68%
+}*/
+
+aside {
+	float: right;
+	border-left: solid black 1px;
+	height: 200px;
+	vertical-align: top
+}
+
+/*@media (min-width: 40em) {
+	.button {
+	width: 20vw;
+	height: 20vw;
+	margin: 10px;
+	background-color: red;
+	}
+}*/
