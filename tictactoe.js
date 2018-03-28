@@ -22,16 +22,15 @@ nameSpan2.textContent = "Player 2";
 // nameSpan1.textContent = player1.value;
 // nameSpan2.textContent = player2.value;
 
-// GRID DISPLAY:
-
-// if (gridLength.value === 4) {
-// 	btnDisplay.style.color = "blue";
-// }
 var rows = [];
-var columns = [];
+var columnArr = [];
 var diagLtoR = [];
+var columns = [];
+var diagRtoL = [];
 
+// Game set up
 var createBtns = function() {
+// Set up Grid 
 	for (var i = 0; i < (gridLength.value*gridLength.value); i++) {
 		btnId = document.createElement("button");
 		btnId.setAttribute('class','button');
@@ -51,85 +50,59 @@ var createBtns = function() {
 	for (var j = 0; j < allBtns.length; j += Number(gridLength.value)) {
 		rows.push(allBtns.slice(j, j + Number(gridLength.value)));
 	}
-// turn columns into arrays
+// calculate diagonal left to right
+	for (var k = 0; k < rows.length; k++) {
+		diagLtoR.push(rows[k][k]);
+	}
+// create array with buttons in order of columns
+	for (var i = 0; i < rows.length; i ++) {
+		for (var j = 0; j < rows.length; j ++) {
+			columnArr.push(rows[j][i]);
+		}
+	}
+// turn columns into arrays of winning patterns
+	for (var i = 0; i <columnArr.length; i += rows.length) {
+		columns.push(columnArr.slice(i, i + rows.length));
+	}
+// calculate diagonal right to left	
 	for (var i = 0; i < rows.length; i++) {
-		diagLtoR.push(rows[i][i]);
-		// for (var j = 0; j <rows.length; j++) {
-		// 	columns.push(j);
-		// }
-		
+		diagRtoL.push(rows[i][rows.length-1-i]);
 	}
 }
 
-
-
+// Game play
 var play = function(event) {
 	if (turn === 'p1') {
 		this.style.background = "url(https://78.media.tumblr.com/avatar_6460333bf1d7_128.png)";
 		p1moves.push(Number(event.target.id));
 		turn = 'p2';
-
-	//P1: win by row
-		for (var i = 0; i < Number(gridLength.value); i++) {	
-			if ((rows[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p1moves.indexOf(elem) > -1))) {
-				console.log('Player1 Wins');
-			}
-			// } else if (diagLtoR.every(elem => p1moves.indexOf(elem) > -1))
-			// 	console.log('Nicole is great');
-		}
-
-
+// Same code for player 2's turn
 	} else if (turn === 'p2') {
 		this.style.background = "url(https://i.pinimg.com/236x/41/95/96/4195964481cdb35817975b5ba3431756--orange-kittens-ginger-kitten.jpg)";
-		p2moves.push(event.target.id);
+		p2moves.push(Number(event.target.id));
 		turn = 'p1';
 	}
 	event.target.disabled = true;
+//P1: calculate win 
+	for (var i = 0; i < Number(gridLength.value); i++) {	
+		if ((rows[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p1moves.indexOf(elem) > -1)) || (columns[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagRtoL.every(elem => p1moves.indexOf(elem) > -1))) {
+				console.log('Player1 Wins');
+		}
+	}
+// P2: calculate win
+	for (var i = 0; i < Number(gridLength.value); i++) { 	
+		if ((rows[i].every(elem => p2moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p2moves.indexOf(elem) > -1)) || (columns[i].every(elem => p2moves.indexOf(elem) > -1)) || (diagRtoL.every(elem => p2moves.indexOf(elem) > -1))) {
+				console.log('Player2 Wins');
+		}
+	}
 }
-			// for (var j = 0; j < gridLength.value; j++) {
-			// 	vWin[hzWin].push(j);
-			// }
-
-
-// for (var i = 0; i < Number(gridLength.value); i++) {	
-// 	if (p1moves.toString('') === hzWin[i].toString('')) {
-// 	console.log('Player1 Wins');
-// 	}
-	// for (var j = 0; j < gridLength.value; j++) {
-	// 	vWin.push(hzWin[i][j]);
-	// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // START GAME
-
 startGame.addEventListener('click', createBtns);
 
 
 
 
-
-// Grid patterns - four patterns:
-
-
-// horizontal: start at 1, plus one, until gridLength. repeat until GL * Gl
-// vertical: horizontal[i] + gridLength
-// diagLtoR: start at 1, + (GL+1), until GL*Gl
-// diagRtoL: start at GL, + (gl-1), until GL*GL(minus gl-1)
 
 
 // Naughts and crosses - game plan
