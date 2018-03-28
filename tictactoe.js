@@ -27,19 +27,10 @@ nameSpan2.textContent = "Player 2";
 // if (gridLength.value === 4) {
 // 	btnDisplay.style.color = "blue";
 // }
-var play = function(event) {
-	if (turn === 'p1') {
-		this.style.background = "url(https://78.media.tumblr.com/avatar_6460333bf1d7_128.png)";
-		p1moves.push(event.target.id);
-		turn = 'p2';
-	} else if (turn === 'p2') {
-		this.style.background = "url(https://i.pinimg.com/236x/41/95/96/4195964481cdb35817975b5ba3431756--orange-kittens-ginger-kitten.jpg)";
-		p2moves.push(event.target.id);
-		turn = 'p1';
-	}
-	event.target.disabled = true;
-}
-var grid = [];
+var rows = [];
+var columns = [];
+var diagLtoR = [];
+
 var createBtns = function() {
 	for (var i = 0; i < (gridLength.value*gridLength.value); i++) {
 		btnId = document.createElement("button");
@@ -48,7 +39,7 @@ var createBtns = function() {
 		btnId.addEventListener('click', play);
 		allBtns.push(i);
 		if (numOfBtns !== 0 && numOfBtns % gridLength.value ===0) {
-			brk = document.createElement("br");
+			brk = document.createElement("br");	
 			gridArea.appendChild(brk)
 			gridArea.appendChild(btnId);
 		} else {
@@ -56,25 +47,59 @@ var createBtns = function() {
 		}
 		numOfBtns += 1;
 	}
-	// allBtns = document.querySelectorAll('.button');
+// turn rows into arrays
 	for (var j = 0; j < allBtns.length; j += Number(gridLength.value)) {
+		rows.push(allBtns.slice(j, j + Number(gridLength.value)));
+	}
+// turn columns into arrays
+	for (var i = 0; i < rows.length; i++) {
+		diagLtoR.push(rows[i][i]);
+		// for (var j = 0; j <rows.length; j++) {
+		// 	columns.push(j);
+		// }
 		
-		grid.push(allBtns.slice(j, j + Number(gridLength.value)));
-		// console.log(j + gridLength.value);
-		// console.log(allBtns);
 	}
 }
 
 
 
-	
+var play = function(event) {
+	if (turn === 'p1') {
+		this.style.background = "url(https://78.media.tumblr.com/avatar_6460333bf1d7_128.png)";
+		p1moves.push(Number(event.target.id));
+		turn = 'p2';
 
-// var createBtns = function(gridLength) {
-// 	var grid = [];
-// 	for (var i = 0; i < gridLength.value; i += gridLength.value) {
-// 		grid.push(allBtns.slice(i, i + gridLength.value))}
+	//P1: win by row
+		for (var i = 0; i < Number(gridLength.value); i++) {	
+			if ((rows[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p1moves.indexOf(elem) > -1))) {
+				console.log('Player1 Wins');
+			}
+			// } else if (diagLtoR.every(elem => p1moves.indexOf(elem) > -1))
+			// 	console.log('Nicole is great');
+		}
+
+
+	} else if (turn === 'p2') {
+		this.style.background = "url(https://i.pinimg.com/236x/41/95/96/4195964481cdb35817975b5ba3431756--orange-kittens-ginger-kitten.jpg)";
+		p2moves.push(event.target.id);
+		turn = 'p1';
+	}
+	event.target.disabled = true;
+}
+			// for (var j = 0; j < gridLength.value; j++) {
+			// 	vWin[hzWin].push(j);
+			// }
+
+
+// for (var i = 0; i < Number(gridLength.value); i++) {	
+// 	if (p1moves.toString('') === hzWin[i].toString('')) {
+// 	console.log('Player1 Wins');
 // 	}
-// } 
+	// for (var j = 0; j < gridLength.value; j++) {
+	// 	vWin.push(hzWin[i][j]);
+	// }
+
+
 
 
 
