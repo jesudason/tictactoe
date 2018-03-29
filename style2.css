@@ -1,54 +1,95 @@
-/*.twin-peaks {
-    font-family: Avant Garde, Avantgarde, Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-    font-size: 60px;
-    font-weight: bold;
-    color: #644647;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-shadow: 1px 1px 0 #47ff52, -1px -1px 0 #47ff52, 1px -1px 0 #47ff52, -1px 1px 0 #47ff52, 0px 1px 0 #47ff52, 1px 0px 0 #47ff52, 0px -1px 0 #47ff52, -1px 0px 0 #47ff52, 4px 2px 0 #333;
-}*/
+* {
+	box-sizing: border-box;
+	cursor: url(http://cur.cursors-4u.net/sports/spo-2/spo145.cur), auto;
+}
+
 body {
-	/*background-image: url('twinpeaks.jpg');*/
 	background-repeat: no-repeat;
 	background-size: 100%;
-	background-color: white;
+	background-color: black;
+	color: white;
+    font-family: helvetica, sans-serif;
 }
 
 h1 {
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+	padding: 15px;
+	margin: 0;
+}
+
+.nba {
+	width: 60%;
+	height: 200px;
+ 	border-radius: 30px;
+  	margin: auto;
+  	border: 5px solid white;
+	background: linear-gradient(to right, #0253A4 50%, 	#CA2C32 50%);
+	height: 100%;
+}
+
+h2, h3, h4 {
 	text-align: center;
+}
+
+.gridLength {
+	display: block;
+	margin: auto;
+	padding: 10px;
+	width: 12%
+}
+
+main {
+	display: flex;
+}
+
+.curry {
+	float: left;
+	text-align: left;
+}
+
+.westbrook {
+	float: right;
+	text-align: right;
 }
 
 div {
 	display: inline-block;
 	width: 68%;
-	float: left;
 }
+
 
 .gridArea {
-	margin: auto;
-	display: block;
+	margin: 0 auto;
+	display: inline-block;
 }
-
 
 .button {
 	width: 10vw;
 	height: 10vw;
 	margin: 10px;
 	position: relative;
-	background-color: pink;
-
+	background: orange;
+	background-image: url(https://cdn4.iconfinder.com/data/icons/basketball-award/100/b-02-256.png);
+	background-position: center;
+	background-size: 95%;
+	border-color: blue;
 }
 
-/*footer {
-	border-top: solid black 1px;
-	width: 68%
-}*/
+.start {
+	color: black;
+	font-family: helvetica, sans-serif;
+	font-size: 2em;
+	width: 15%;
+}
+
 
 aside {
-	float: right;
-	border-left: solid black 1px;
-	height: 200px;
-	vertical-align: top
+
+border-top: solid white 1px;
+	
 }
 
 /*@media (min-width: 40em) {

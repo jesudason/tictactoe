@@ -1,32 +1,36 @@
-// variables
+// Grid set-up variables
 var numOfBtns = 0;
 var btnId;
 var brk;
 var gridLength = document.querySelector('.gridLength');
+var gridArea = document.querySelector('.gridArea');
 var startGame = document.querySelector('.start');
+// Player/turn variables
 var player1 = document.querySelector('.player1');
 var player2 = document.querySelector('player2');
 var nameSpan1 = document.querySelector('.name1');
 var nameSpan2 = document.querySelector('.name2');
-var gridArea = document.querySelector('.gridArea');
 var turn = 'p1';
-var	allBtns = [];
 var p1moves = [];
 var p2moves = [];
+// preparing arrays to calculate winning patterns
+var	allBtns = [];
+var columnArr = [];
+var columns = [];
+var rows = [];
+var diagLtoR = [];
+var diagRtoL = [];
+// win game
+var winner;
 
-nameSpan1.textContent = "Player 1";
-nameSpan2.textContent = "Player 2";
+// nameSpan1.textContent = "Player 1";
+// nameSpan2.textContent = "Player 2";
 
 // TAKE USER DETAILS:
 
 // nameSpan1.textContent = player1.value;
 // nameSpan2.textContent = player2.value;
 
-var rows = [];
-var columnArr = [];
-var diagLtoR = [];
-var columns = [];
-var diagRtoL = [];
 
 // Game set up
 var createBtns = function() {
@@ -73,12 +77,12 @@ var createBtns = function() {
 // Game play
 var play = function(event) {
 	if (turn === 'p1') {
-		this.style.background = "url(https://78.media.tumblr.com/avatar_6460333bf1d7_128.png)";
+		this.style.background = "url(http://tsnimages.tsn.ca/ImageProvider/TeamLogo?seoId=golden-state-warriors&width=128&height=128)";
 		p1moves.push(Number(event.target.id));
 		turn = 'p2';
 // Same code for player 2's turn
 	} else if (turn === 'p2') {
-		this.style.background = "url(https://i.pinimg.com/236x/41/95/96/4195964481cdb35817975b5ba3431756--orange-kittens-ginger-kitten.jpg)";
+		this.style.background = "url(http://tsnimages.tsn.ca/ImageProvider/TeamLogo?seoId=oklahoma-city-thunder&width=128&height=128)";
 		p2moves.push(Number(event.target.id));
 		turn = 'p1';
 	}
@@ -87,15 +91,26 @@ var play = function(event) {
 	for (var i = 0; i < Number(gridLength.value); i++) {	
 		if ((rows[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p1moves.indexOf(elem) > -1)) || (columns[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagRtoL.every(elem => p1moves.indexOf(elem) > -1))) {
 				console.log('Player1 Wins');
+				return winner = 'p1';
 		}
 	}
 // P2: calculate win
 	for (var i = 0; i < Number(gridLength.value); i++) { 	
 		if ((rows[i].every(elem => p2moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p2moves.indexOf(elem) > -1)) || (columns[i].every(elem => p2moves.indexOf(elem) > -1)) || (diagRtoL.every(elem => p2moves.indexOf(elem) > -1))) {
 				console.log('Player2 Wins');
+				return winner = 'p2';
 		}
 	}
 }
+
+
+// game animation
+
+/*var curry = document.querySelector('.curry');
+	if (winner === 'p1') {
+		curry.display = 'data-alt';
+		// document.querySelector('img[class="curry"]').src = "https://giphy.com/embed/3o7btYjiYMyko96Psc";
+	}*/
 
 // START GAME
 startGame.addEventListener('click', createBtns);
