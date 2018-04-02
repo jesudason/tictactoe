@@ -11,6 +11,25 @@ body {
     font-family: helvetica, sans-serif;
 }
 
+.flex-container {
+	display: flex;
+	margin: 0;
+	justify-content: space-around;	
+}
+
+/*Header*/
+.nba {
+	display: block;
+	width: 60%;
+	height: 200px;
+ 	border-radius: 30px;
+  	margin: auto;
+  	margin-bottom: 50px;
+  	border: 5px solid white;
+	background: linear-gradient(to right, #0253A4 50%, 	#CA2C32 50%);
+	height: 100%;
+}
+
 h1 {
     font-size: 60px;
     font-weight: bold;
@@ -20,83 +39,114 @@ h1 {
 	margin: 0;
 }
 
-.nba {
+
+/*Game set-up*/
+
+
+section {
+	margin-top: 10px;
+	/*margin-bottom: 10px;*/
 	width: 60%;
-	height: 200px;
- 	border-radius: 30px;
-  	margin: auto;
-  	border: 5px solid white;
-	background: linear-gradient(to right, #0253A4 50%, 	#CA2C32 50%);
-	height: 100%;
+	flex-direction: column;
 }
 
 h2, h3, h4 {
 	text-align: center;
+	/*padding-bottom: 10px;*/
 }
+
 
 .gridLength {
-	display: block;
-	margin: auto;
+	margin: 0 10px;
 	padding: 10px;
-	width: 12%
 }
+/* Players */
 
-main {
-	display: flex;
-}
 
 .curry {
-	float: left;
-	text-align: left;
+	margin: 0;
+	width: 50%
 }
 
 .westbrook {
-	float: right;
-	text-align: right;
+	margin: 0;
+	width: 50%
 }
 
-div {
-	display: inline-block;
-	width: 68%;
+.start, {
+	color: black;
+	font-family: helvetica, sans-serif;
+	font-size: 1em;
+	background-color: orange;
+	vertical-align: baseline;
 }
 
-
-.gridArea {
+.nextGame {
+	color: black;
+	font-family: helvetica,sans-serif;
+	font-size: 1em;
+	background-color: orange;
+	display: block;
 	margin: 0 auto;
-	display: inline-block;
 }
+
+@media (min-width: 40em) {
+	.start {
+		font-size: 2em;
+		background-color: orange;
+	}
+}
+
+/* Grid area*/
+
+main {
+border-bottom: solid white 1px;
+padding: 15px;
+}
+
+.commentary > h2 {
+	color: #0253A4;
+}
+
+.counter > h2 {
+	color: #CA2C32;
+}
+
+main > h2 {
+	font-size: 2em;
+	text-decoration: underline;
+}
+
+/*Grid*/
+.gridArea {
+	display: block;
+	margin: auto;
+}
+
+
 
 .button {
-	width: 10vw;
-	height: 10vw;
-	margin: 10px;
-	position: relative;
-	background: orange;
+	width: 8vw;
+	height: 8vw;
+	margin: auto;
+	background: lightgrey;
 	background-image: url(https://cdn4.iconfinder.com/data/icons/basketball-award/100/b-02-256.png);
+	background-repeat: no-repeat;
 	background-position: center;
-	background-size: 95%;
+	background-size: 90%;
 	border-color: blue;
 }
 
-.start {
-	color: black;
-	font-family: helvetica, sans-serif;
-	font-size: 2em;
-	width: 15%;
+/*Side panels*/
+.commentary {
+	border-right: white solid 1px;
+	min-height: 300px;
+	padding-right: 15px;
+	width: 20%
 }
-
-
-aside {
-
-border-top: solid white 1px;
-	
+.counter {
+	border-left: white solid 1px;
+	min-height: 300px;
+	padding-left: 15px;
+	width: 20%
 }
-
-/*@media (min-width: 40em) {
-	.button {
-	width: 20vw;
-	height: 20vw;
-	margin: 10px;
-	background-color: red;
-	}
-}*/

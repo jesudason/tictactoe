@@ -5,11 +5,10 @@ var brk;
 var gridLength = document.querySelector('.gridLength');
 var gridArea = document.querySelector('.gridArea');
 var startGame = document.querySelector('.start');
+var main = document.querySelector('main');
 // Player/turn variables
 var player1 = document.querySelector('.player1');
 var player2 = document.querySelector('player2');
-var nameSpan1 = document.querySelector('.name1');
-var nameSpan2 = document.querySelector('.name2');
 var turn = 'p1';
 var p1moves = [];
 var p2moves = [];
@@ -20,21 +19,89 @@ var columns = [];
 var rows = [];
 var diagLtoR = [];
 var diagRtoL = [];
+// Game commentary/win counter
+var gameSummary = document.querySelector('.gameSummary');
+var curryTally = document.querySelector('.curryTally');
+var westTally = document.querySelector('.westTally');
 // win game
-var winner;
+var westWin = 0;
+var curryWin = 0;
+var round = 0;
+var nextGame = document.querySelector('.nextGame');
 
-// nameSpan1.textContent = "Player 1";
-// nameSpan2.textContent = "Player 2";
+var startPlayer = function() {
+	if (turn === 'p1') {
+		gameSummary.textContent = 'Player 1 to start. Your move Curry';
+		gameSummary.appendChild(document.createElement('BR'));
+	} else {
+		gameSummary.textContent = 'Player 2 to start. Your move Westbrook';
+		gameSummary.appendChild(document.createElement('BR'));
+	}
+}
 
-// TAKE USER DETAILS:
+var addTextNode = function(text) {
+  	var newtext = document.createTextNode(text);
+  	gameSummary.appendChild(newtext);
+  }
 
-// nameSpan1.textContent = player1.value;
-// nameSpan2.textContent = player2.value;
+// check for winner
+var p1Win = function() {
+	for (var i = 0; i < Number(gridLength.value); i++) {	
+		if ((rows[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p1moves.indexOf(elem) > -1)) || (columns[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagRtoL.every(elem => p1moves.indexOf(elem) > -1))) {
+//If P1 wins 
+			round += 1;
+			curryWin +=1;
+			document.querySelectorAll('.button').forEach(function(btn) {
+				btn.disabled = true;
+			});
+			gameSummary.appendChild(document.createElement('BR'));
+			curryTally.textContent = 'Curry: ' + curryWin + ' wins';
+			return addTextNode('Round ' + round + ' won by Curry! Congrats Player 1');
+		}
+	}
+}
 
+var p2Win = function() {
+	for (var i = 0; i < Number(gridLength.value); i++) { 	
+		if ((rows[i].every(elem => p2moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p2moves.indexOf(elem) > -1)) || (columns[i].every(elem => p2moves.indexOf(elem) > -1)) || (diagRtoL.every(elem => p2moves.indexOf(elem) > -1))) {
+//If P2 wins 
+				round += 1;
+				westWin +=1;
+				document.querySelectorAll('.button').forEach(function(btn) {
+					btn.disabled = true;
+				});
+				gameSummary.appendChild(document.createElement('BR'));
+				westTally.textContent = 'Westbrook: ' + westWin + ' wins';
+				curryTally.appendChild(document.createElement('BR'));
+				return addTextNode('Westbrook wins Round ' + round + '! Congrats Player 2');
+				
+		}
+	}
+}
+
+// Overall winner declared
+var gameOver= function()	{
+	if (westWin === 4) {
+		gameSummary.appendChild(document.createElement('BR'));
+		gameSummary.appendChild(document.createElement('BR'));
+		addTextNode('Game Over: Russel Westbrook Wins MVP! Congrats player 2');
+		alert('Game Over: Russel Westbrook Wins MVP! Congrats Player 2');
+	} else if (curryWin === 4) {
+		gameSummary.appendChild(document.createElement('BR'));
+		gameSummary.appendChild(document.createElement('BR'));
+		addTextNode('Steph Curry Wins MVP! Congrats player 1');
+		alert('Game Over: Steph Curry Wins MVP! Congrats Player 1');		
+	}
+}
 
 // Game set up
-var createBtns = function() {
+main.style.display = 'none';
+nextGame.style.display = 'none';
+gameSummary.textContent = 'Player 1 to start. Your move Curry';
+gameSummary.appendChild(document.createElement('BR'));
+
 // Set up Grid 
+var createBtns = function() {
 	for (var i = 0; i < (gridLength.value*gridLength.value); i++) {
 		btnId = document.createElement("button");
 		btnId.setAttribute('class','button');
@@ -72,11 +139,24 @@ var createBtns = function() {
 	for (var i = 0; i < rows.length; i++) {
 		diagRtoL.push(rows[i][rows.length-1-i]);
 	}
+// controls for grid size
+	if (gridLength.value > 7) {
+		alert("That's an insane size court for one-on-one. Go small or go home.");
+		main.style.display = 'none';
+	} else if (gridLength.value < 3) {
+		alert("You're never gonna make MVP training on a court that small");
+		main.style.display = 'flex';
+	} else {
+		main.style.display = 'flex';
+	}
+	nextGame.style.display = 'block';
 }
-
 // Game play
+
+
 var play = function(event) {
 	if (turn === 'p1') {
+		
 		this.style.background = "url(http://tsnimages.tsn.ca/ImageProvider/TeamLogo?seoId=golden-state-warriors&width=128&height=128)";
 		p1moves.push(Number(event.target.id));
 		turn = 'p2';
@@ -88,33 +168,31 @@ var play = function(event) {
 	}
 	event.target.disabled = true;
 //P1: calculate win 
-	for (var i = 0; i < Number(gridLength.value); i++) {	
-		if ((rows[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p1moves.indexOf(elem) > -1)) || (columns[i].every(elem => p1moves.indexOf(elem) > -1)) || (diagRtoL.every(elem => p1moves.indexOf(elem) > -1))) {
-				console.log('Player1 Wins');
-				return winner = 'p1';
-		}
-	}
+	p1Win();
+	p2Win();
 // P2: calculate win
-	for (var i = 0; i < Number(gridLength.value); i++) { 	
-		if ((rows[i].every(elem => p2moves.indexOf(elem) > -1)) || (diagLtoR.every(elem => p2moves.indexOf(elem) > -1)) || (columns[i].every(elem => p2moves.indexOf(elem) > -1)) || (diagRtoL.every(elem => p2moves.indexOf(elem) > -1))) {
-				console.log('Player2 Wins');
-				return winner = 'p2';
-		}
-	}
+	gameOver();
 }
 
 
-// game animation
-
-/*var curry = document.querySelector('.curry');
-	if (winner === 'p1') {
-		curry.display = 'data-alt';
-		// document.querySelector('img[class="curry"]').src = "https://giphy.com/embed/3o7btYjiYMyko96Psc";
-	}*/
+var playAgain = function() {
+	
+	document.querySelectorAll('.button').forEach(function(btn) {
+		btn.removeAttribute('style');
+	});
+	document.querySelectorAll('.button').forEach(function(btn) {
+		btn.removeAttribute('disabled');
+	});
+	p1moves = [];
+	p2moves = [];
+	startPlayer();
+	
+}
 
 // START GAME
 startGame.addEventListener('click', createBtns);
 
+nextGame.addEventListener('click', playAgain);
 
 
 
