@@ -1,7 +1,7 @@
 # tictactoe
 GA project 1
 
-Click here to play my game: https://jesudason.github.io/tictactoe/
+Click here to play my game: <a href="https://jesudason.github.io/tictactoe/">
 
 ##Usage Instructions
 
